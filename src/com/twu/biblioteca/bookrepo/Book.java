@@ -1,15 +1,19 @@
 package com.twu.biblioteca.bookrepo;
 
+import java.time.Year;
+
 public class Book {
 
     private String title;
     private String author;
     private String isbn;
+    private Year year;
 
-    public Book(String title, String author, String isbn) {
+    public Book(String title, String author, String isbn, Year year) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.year = year;
     }
 
     @Override
@@ -21,4 +25,15 @@ public class Book {
         return author;
     }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public String getIsbn() {
+        return isbn;
+    }
+
+    public Year getYear() {
+        return year;
+    }
 }

@@ -16,9 +16,11 @@ public class UserInterface {
     }
 
     public void displayBooks() {
+        System.out.printf("%-30s%-30s%-30s%-30s%n", "** Title **", "** Author **", "** Year **", "** ISBN **");
         for (Book book :
                 bookRepository.getBooks()) {
-            System.out.println(book.toString());
+            System.out.printf("%-20s%-10s%-20s%-10s%-20s%-10s%-20s%-10s%n", book.getTitle(), "|",
+                    book.getAuthor(), "|", book.getYear(), "|", book.getIsbn(), "|");
         }
     }
 }

@@ -16,6 +16,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.time.Year;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertThat;
@@ -57,11 +58,12 @@ public class UITest {
     @Test
     public void theOneWhereAllTheBooksAreDisplayed() {
         //given
-        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234"));
+        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666)));
         Mockito.when(bookRepository.getBooks()).thenReturn(mockBooks);
         //when
         userInterface.displayBooks();
         //then
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
+        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
     }
 }
