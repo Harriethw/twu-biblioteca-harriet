@@ -24,9 +24,14 @@ public class UserInterface {
         String input;
         System.out.println("What would you like to do?");
         System.out.println("Enter 1 to see the list of books");
+        System.out.println("Enter 2 to quite the application");
         input = scanner.next();
         if (input.equals("1")) {
             displayBooks();
+            menu();
+        } else if (input.equals("2")) {
+            System.out.println("Goodbye!");
+            System.exit(0);
         } else {
             System.out.println("Please select a valid option!");
             menu();
