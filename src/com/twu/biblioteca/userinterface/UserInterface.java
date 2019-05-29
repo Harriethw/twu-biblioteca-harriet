@@ -3,16 +3,34 @@ package com.twu.biblioteca.userinterface;
 import com.twu.biblioteca.bookrepo.Book;
 import com.twu.biblioteca.bookrepo.BookRepository;
 
+import java.util.Scanner;
+
 public class UserInterface {
+
+    private Scanner scanner;
 
     private BookRepository bookRepository;
 
-    public UserInterface(BookRepository bookRepository) {
+    public UserInterface(BookRepository bookRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
+        this.scanner = scanner;
     }
 
     public void welcomeMessage() {
         System.out.println("Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!");
+    }
+
+    public void menu() {
+        String input;
+        System.out.println("What would you like to do?");
+        System.out.println("Enter 1 to see the list of books");
+        input = scanner.next();
+        if (input.equals("1")) {
+            displayBooks();
+        } else {
+            System.out.println("Sorry, I didn't recognise that command. Please try again.");
+            menu();
+        }
     }
 
     public void displayBooks() {
@@ -23,4 +41,5 @@ public class UserInterface {
                     book.getAuthor(), "|", book.getYear(), "|", book.getIsbn(), "|");
         }
     }
+
 }

@@ -14,10 +14,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintStream;
 import java.time.Year;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import static org.junit.Assert.assertThat;
 
@@ -63,6 +66,23 @@ public class UITest {
         //when
         userInterface.displayBooks();
         //then
+        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
+        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
+    }
+
+    @Test
+    public void theOneWhereTheMenuGivesOptionToBrowseCatalogue() {
+        //given there are books in the catalogue
+        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666)));
+        Mockito.when(bookRepository.getBooks()).thenReturn(mockBooks);
+        //when I press the option to see them
+        String input = "1";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        userInterface.menu();
+        //then I should see the books displayed
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
     }
