@@ -28,7 +28,7 @@ public class UserInterface {
         if (input.equals("1")) {
             displayBooks();
         } else {
-            System.out.println("Sorry, I didn't recognise that command. Please try again.");
+            System.out.println("Please select a valid option!");
             menu();
         }
     }
