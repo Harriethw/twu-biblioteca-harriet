@@ -5,13 +5,31 @@ import java.util.List;
 
 public class BookRepository {
 
-    private static List<Book> books = new ArrayList<>();
+    private static List<Book> availableBooks = new ArrayList<>();
 
-    public List<Book> getBooks() {
-        return books;
+    private static List<Book> checkedOutBooks = new ArrayList<>();
+
+    public List<Book> getAvailableBooks() {
+        return availableBooks;
     }
 
     public void addBook(Book book) {
-        books.add(book);
+        availableBooks.add(book);
+    }
+
+    public boolean checkOutBook(String isbn) {
+        Book chosenBook = availableBooks.stream().filter(book -> book.getIsbn().equals(isbn))
+                .findFirst().orElse(null);
+        if (chosenBook != null) {
+            availableBooks.remove(chosenBook);
+            checkedOutBooks.add(chosenBook);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public List<Book> getCheckedOutBooks() {
+        return checkedOutBooks;
     }
 }
