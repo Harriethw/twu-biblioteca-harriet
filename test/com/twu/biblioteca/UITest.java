@@ -47,6 +47,12 @@ public class UITest {
         return testOut.toString();
     }
 
+    @Before
+    public void addBooks() {
+        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666)));
+        Mockito.when(bookRepository.getBooks()).thenReturn(mockBooks);
+    }
+
     @After
     public void restoreSystemInputOutput() {
         System.setOut(systemOut);
@@ -60,22 +66,18 @@ public class UITest {
 
     @Test
     public void theOneWhereAllTheBooksAreDisplayed() {
-        //given
-        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666)));
-        Mockito.when(bookRepository.getBooks()).thenReturn(mockBooks);
-        //when
+        //given there are books in the catalogue
+        //when they are displayed
         userInterface.displayBooks();
-        //then
+        //then the author and year appear
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
     }
 
     @Test
     public void theOneWhereTheMenuGivesOptionToBrowseCatalogue() {
-        //given there are books in the catalogue
-        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666)));
-        Mockito.when(bookRepository.getBooks()).thenReturn(mockBooks);
-        //when I press the option to see them
+        //given there are books in the catalogue and I have opened the app
+        //when I press the option to see the books
         String input = "1";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
@@ -85,5 +87,19 @@ public class UITest {
         //then I should see the books displayed
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
         assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
+    }
+
+    @Test
+    public void theOneWhereAnUnrecognizedInputIsGivenInTheMenu() {
+        //given I am on the menu of the app
+        //when I press an incorrect button
+        String input = "z 1";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        userInterface.menu();
+        //then I see an error message
+        assertThat(getOutput(), containsString("Sorry"));
     }
 }
