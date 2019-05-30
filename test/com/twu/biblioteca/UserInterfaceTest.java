@@ -29,7 +29,7 @@ import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UITest {
+public class UserInterfaceTest {
     @Rule
     public final ExpectedSystemExit exit = ExpectedSystemExit.none();
 

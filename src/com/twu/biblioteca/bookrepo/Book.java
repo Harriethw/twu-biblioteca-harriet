@@ -16,11 +16,6 @@ public class Book {
         this.year = year;
     }
 
-    @Override
-    public String toString() {
-        return title + ", " + author + ", " + isbn;
-    }
-
     public String getAuthor() {
         return author;
     }
