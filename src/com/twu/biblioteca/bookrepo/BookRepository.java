@@ -32,4 +32,16 @@ public class BookRepository {
     public List<Book> getCheckedOutBooks() {
         return checkedOutBooks;
     }
+
+    public boolean returnBook(String isbn) {
+        Book returnBook = checkedOutBooks.stream().filter(book -> book.getIsbn().equals(isbn))
+                .findFirst().orElse(null);
+        if (returnBook != null) {
+            availableBooks.add(returnBook);
+            checkedOutBooks.remove(returnBook);
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

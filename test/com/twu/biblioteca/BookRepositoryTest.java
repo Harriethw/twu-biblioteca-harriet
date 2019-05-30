@@ -3,12 +3,16 @@ package com.twu.biblioteca;
 import com.twu.biblioteca.bookrepo.Book;
 import com.twu.biblioteca.bookrepo.BookRepository;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.Year;
 
+
+@RunWith(MockitoJUnitRunner.class)
 public class BookRepositoryTest {
     private BookRepository bookRepository = new BookRepository();
 
@@ -32,6 +36,22 @@ public class BookRepositoryTest {
         //then that book should be removed from the available books and added to checked out
         assertFalse(bookRepository.getAvailableBooks().contains(book));
         assertTrue(bookRepository.getCheckedOutBooks().contains(book));
+        bookRepository.returnBook("1234");
+    }
+
+    @Test
+    public void theOneWhereWeReturnABook() {
+        Book book = new Book("Jane Eyre", "Charlotte Bronte", "1235", Year.of(1666));
+        bookRepository.addBook(book);
+        //given I have the isbn of a book that is checked out
+        assertTrue(bookRepository.getAvailableBooks().contains(book));
+        bookRepository.checkOutBook("1235");
+        assertFalse(bookRepository.getAvailableBooks().contains(book));
+        //when I pass that isbn to the repo
+        bookRepository.returnBook("1235");
+        //then that book should be removed from the available books and added to checked out
+        assertTrue(bookRepository.getAvailableBooks().contains(book));
+        assertFalse(bookRepository.getCheckedOutBooks().contains(book));
     }
 
 }
