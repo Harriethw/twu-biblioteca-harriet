@@ -142,5 +142,6 @@ public class UITest {
         //then the book is checked out
         Mockito.verify(bookRepository, times(1)).checkOutBook("1234");
         assertTrue(bookRepository.getCheckedOutBooks().contains(mockBook));
+        assertThat(getOutput(), containsString("Thank you! Enjoy the book."));
     }
 }
