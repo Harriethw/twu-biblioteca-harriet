@@ -46,8 +46,7 @@ public class UserInterface {
         String input;
         System.out.println("What is the ISBN of the book you would like to check out?");
         input = scanner.next();
-        bookRepository.checkOutBook(input);
-        System.out.println("Thank you! Enjoy the book.");
+        System.out.println(bookRepository.checkOutBook(input) ? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
     }
 
     public void displayBooks() {
