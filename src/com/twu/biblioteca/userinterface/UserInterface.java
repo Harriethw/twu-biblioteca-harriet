@@ -28,22 +28,27 @@ public class UserInterface {
         System.out.println("Enter 3 to return a book");
         System.out.println("Enter q to quit the application");
         input = scanner.next();
+        handleMenuInput(input);
+        menu();
+    }
+
+    private void handleMenuInput(String input) {
         switch (input) {
             case "1":
                 displayBooks();
-                menu();
+                break;
             case "2":
                 checkOutBook();
-                menu();
+                break;
             case "3":
                 returnBook();
-                menu();
+                break;
             case "q":
                 System.out.println("Goodbye!");
                 System.exit(0);
             default:
                 System.out.println("Please select a valid option!");
-                menu();
+                break;
         }
     }
 
