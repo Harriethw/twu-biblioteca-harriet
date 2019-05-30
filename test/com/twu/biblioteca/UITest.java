@@ -168,7 +168,7 @@ public class UITest {
     }
 
     @Test
-    public void theOneWhereWeReturnABook() {
+    public void theOneWhereWeSuccessfullyReturnABook() {
         //given I am on the menu option to return a book
         //And I enter an existing isbn
         String input = "3 1234 q";
@@ -181,7 +181,24 @@ public class UITest {
         exit.checkAssertionAfterwards(() -> {
             Mockito.verify(bookRepository, times(1)).returnBook("1234");
             assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
-            assertThat(getOutput(), containsString("Thank you for returning the book."));
+        });
+        userInterface.menu();
+    }
+
+    @Test
+    public void theOneWhereWeUnsuccessfullyReturnABook() {
+        //given I am on the menu option to return a book
+        //And I enter an incorrect isbn
+        String input = "3 1274 q";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        exit.expectSystemExit();
+        //then the book is checked out
+        exit.checkAssertionAfterwards(() -> {
+            Mockito.verify(bookRepository, times(1)).returnBook("1274");
+            assertThat(getOutput(), containsString("That is not a valid book to return."));
         });
         userInterface.menu();
     }
