@@ -181,6 +181,7 @@ public class UITest {
         exit.checkAssertionAfterwards(() -> {
             Mockito.verify(bookRepository, times(1)).returnBook("1234");
             assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+            assertThat(getOutput(), containsString("Thank you for returning the book."));
         });
         userInterface.menu();
     }

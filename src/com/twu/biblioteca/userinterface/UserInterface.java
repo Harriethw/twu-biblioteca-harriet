@@ -52,6 +52,7 @@ public class UserInterface {
         System.out.println("What is the ISBN of the book you would like to check out?");
         input = scanner.next();
         bookRepository.returnBook(input);
+        System.out.println("Thank you for returning the book.");
     }
 
     private void checkOutBook() {
