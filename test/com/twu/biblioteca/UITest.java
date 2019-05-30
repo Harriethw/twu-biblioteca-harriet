@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UITest {
@@ -41,6 +43,7 @@ public class UITest {
     private UserInterface userInterface;
 
     private ArrayList<Book> mockBooks = new ArrayList<>();
+    private Book mockBook = new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666));
 
     @Before
     public void setUpOutput() {
@@ -54,8 +57,8 @@ public class UITest {
 
     @Before
     public void addBooks() {
-        mockBooks.add(new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666)));
-        Mockito.when(bookRepository.getBooks()).thenReturn(mockBooks);
+        mockBooks.add(mockBook);
+        Mockito.when(bookRepository.getAvailableBooks()).thenReturn(mockBooks);
     }
 
     @After
@@ -75,8 +78,8 @@ public class UITest {
         //when they are displayed
         userInterface.displayBooks();
         //then the author and year appear
-        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
-        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
+        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getAuthor()));
+        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getYear().toString()));
     }
 
     @Test
@@ -91,8 +94,9 @@ public class UITest {
         exit.expectSystemExit();
         userInterface.menu();
         //then I should see the books displayed
-        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getAuthor()));
-        assertThat(getOutput(), containsString(bookRepository.getBooks().get(0).getYear().toString()));
+        Mockito.verify(bookRepository, times(1)).getAvailableBooks();
+        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getAuthor()));
+        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getYear().toString()));
     }
 
     @Test
@@ -122,5 +126,21 @@ public class UITest {
         //then the app quits
         exit.expectSystemExit();
         userInterface.menu();
+    }
+
+    @Test
+    public void theOneWhereWeCheckOutABook() {
+        //given I am on the menu option to check out a book
+        //And I enter an existing isbn
+        String input = "3 1234 2";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        exit.expectSystemExit();
+        userInterface.menu();
+        //then the book is checked out
+        Mockito.verify(bookRepository, times(1)).checkOutBook("1234");
+        assertTrue(bookRepository.getCheckedOutBooks().contains(mockBook));
     }
 }

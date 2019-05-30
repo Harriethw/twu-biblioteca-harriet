@@ -13,6 +13,16 @@ public class BookRepositoryTest {
     private BookRepository bookRepository = new BookRepository();
 
     @Test
+    public void theOneWhereWeAddABookToTheInventory() {
+        //given I have a book
+        Book book = new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666));
+        //when I add it to the repository
+        bookRepository.addBook(book);
+        //it should appear in the list of available books
+        assertTrue(bookRepository.getAvailableBooks().contains(book));
+    }
+
+    @Test
     public void theOneWhereWeCheckoutABook() {
         //given I have the isbn of a book that is available
         //when I pass that isbn to the repo
