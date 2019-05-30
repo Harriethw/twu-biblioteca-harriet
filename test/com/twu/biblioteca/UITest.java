@@ -86,7 +86,7 @@ public class UITest {
     public void theOneWhereTheMenuGivesOptionToBrowseCatalogue() {
         //given there are books in the catalogue and I have opened the app
         //when I press the option to see the books
-        String input = "1 2";
+        String input = "1 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
@@ -105,7 +105,7 @@ public class UITest {
     public void theOneWhereAnUnrecognizedInputIsGivenInTheMenu() {
         //given I am on the menu of the app
         //when I press an incorrect button
-        String input = "z 2";
+        String input = "z q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
@@ -120,7 +120,7 @@ public class UITest {
     public void theOneWhereWeQuit() {
         //given I am on the menu of the app
         //when I press the option to quit
-        String input = "2";
+        String input = "q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
@@ -134,7 +134,7 @@ public class UITest {
     public void theOneWhereWeCheckOutABookSuccessfully() {
         //given I am on the menu option to check out a book
         //And I enter an existing isbn
-        String input = "3 1234 2";
+        String input = "2 1234 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
@@ -152,7 +152,7 @@ public class UITest {
     public void theOneWhereWeCheckOutABookUnsuccessfully() {
         //given I am on the menu option to check out a book
         //And I enter an existing isbn
-        String input = "3 1238 2";
+        String input = "2 1238 q";
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
@@ -163,6 +163,24 @@ public class UITest {
             Mockito.verify(bookRepository, times(1)).checkOutBook("1238");
             assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
             assertThat(getOutput(), containsString("Sorry, that book is not available."));
+        });
+        userInterface.menu();
+    }
+
+    @Test
+    public void theOneWhereWeReturnABook() {
+        //given I am on the menu option to return a book
+        //And I enter an existing isbn
+        String input = "3 1234 q";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        exit.expectSystemExit();
+        //then the book is checked out
+        exit.checkAssertionAfterwards(() -> {
+            Mockito.verify(bookRepository, times(1)).returnBook("1234");
+            assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
         });
         userInterface.menu();
     }
