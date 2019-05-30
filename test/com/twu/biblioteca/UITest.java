@@ -24,8 +24,8 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -92,11 +92,13 @@ public class UITest {
         Scanner mockScanner = new Scanner(System.in);
         UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
         exit.expectSystemExit();
-        userInterface.menu();
         //then I should see the books displayed
-        Mockito.verify(bookRepository, times(1)).getAvailableBooks();
-        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getAuthor()));
-        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getYear().toString()));
+        exit.checkAssertionAfterwards(() -> {
+            Mockito.verify(bookRepository, times(1)).getAvailableBooks();
+            assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getAuthor()));
+            assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getYear().toString()));
+        });
+        userInterface.menu();
     }
 
     @Test
@@ -109,9 +111,9 @@ public class UITest {
         Scanner mockScanner = new Scanner(System.in);
         UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
         exit.expectSystemExit();
-        userInterface.menu();
         //then I see an error message
-        assertThat(getOutput(), containsString("Sorry"));
+        exit.checkAssertionAfterwards(() -> assertThat(getOutput(), containsString("valid")));
+        userInterface.menu();
     }
 
     @Test
@@ -129,7 +131,7 @@ public class UITest {
     }
 
     @Test
-    public void theOneWhereWeCheckOutABook() {
+    public void theOneWhereWeCheckOutABookSuccessfully() {
         //given I am on the menu option to check out a book
         //And I enter an existing isbn
         String input = "3 1234 2";
@@ -138,10 +140,30 @@ public class UITest {
         Scanner mockScanner = new Scanner(System.in);
         UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
         exit.expectSystemExit();
-        userInterface.menu();
         //then the book is checked out
-        Mockito.verify(bookRepository, times(1)).checkOutBook("1234");
-        assertTrue(bookRepository.getCheckedOutBooks().contains(mockBook));
-        assertThat(getOutput(), containsString("Thank you! Enjoy the book."));
+        exit.checkAssertionAfterwards(() -> {
+            Mockito.verify(bookRepository, times(1)).checkOutBook("1234");
+            assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+        });
+        userInterface.menu();
+    }
+
+    @Test
+    public void theOneWhereWeCheckOutABookUnsuccessfully() {
+        //given I am on the menu option to check out a book
+        //And I enter an existing isbn
+        String input = "3 1238 2";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        exit.expectSystemExit();
+        //then the book is checked out
+        exit.checkAssertionAfterwards(() -> {
+            Mockito.verify(bookRepository, times(1)).checkOutBook("1238");
+            assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+            assertThat(getOutput(), containsString("Sorry, that book is not available."));
+        });
+        userInterface.menu();
     }
 }
