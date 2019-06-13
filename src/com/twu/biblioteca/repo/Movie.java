@@ -5,10 +5,12 @@ import java.time.Year;
 public class Movie extends Lendable {
 
     private String director;
+    private int rating;
 
-    public Movie(String title, String director, Year year) {
+    public Movie(String title, String director, Year year, int rating) {
         super.setTitle(title);
         this.director = director;
+        this.rating = rating;
         super.setYear(year);
     }
 
@@ -16,4 +18,7 @@ public class Movie extends Lendable {
         return director;
     }
 
+    public int getRating() {
+        return rating;
+    }
 }

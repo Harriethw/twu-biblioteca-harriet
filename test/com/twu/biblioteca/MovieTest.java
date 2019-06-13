@@ -7,28 +7,32 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.time.Year;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class MovieTest {
 
 
-    private Movie movieUnderTest = new Movie("Clueless", "AA Milne", Year.of(1999));
+    private Movie movieUnderTest = new Movie("Clueless", "AA Milne", Year.of(1999), 10);
 
 
     @Test
     public void getTitle() {
-        assertTrue(movieUnderTest.getTitle().equals("Clueless"));
+        assertEquals("Clueless", movieUnderTest.getTitle());
     }
 
     @Test
     public void getDirector() {
-        assertTrue(movieUnderTest.getDirector().equals("AA Milne"));
+        assertEquals("AA Milne", movieUnderTest.getDirector());
     }
 
     @Test
     public void getYear() {
-        assertTrue(movieUnderTest.getYear().equals(Year.of(1999)));
+        assertEquals(Year.of(1999), movieUnderTest.getYear());
     }
 
+    @Test
+    public void getRating() {
+        assertEquals(10, movieUnderTest.getRating());
+    }
 }

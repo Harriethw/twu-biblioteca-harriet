@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 import java.time.Year;
 
@@ -18,22 +18,22 @@ public class BookTest {
 
     @Test
     public void getTitle() {
-        assertTrue(bookUnderTest.getTitle().equals("Winnie the Pooh"));
+        assertEquals("Winnie the Pooh", bookUnderTest.getTitle());
     }
 
     @Test
     public void getAuthor() {
-        assertTrue(bookUnderTest.getAuthor().equals("AA Milne"));
+        assertEquals("AA Milne", bookUnderTest.getAuthor());
     }
 
     @Test
     public void getIsbn() {
-        assertTrue(bookUnderTest.getIsbn().equals("1234"));
+        assertEquals("1234", bookUnderTest.getIsbn());
     }
 
     @Test
     public void getYear() {
-        assertTrue(bookUnderTest.getYear().equals(Year.of(1666)));
+        assertEquals(Year.of(1666), bookUnderTest.getYear());
     }
 
 }
