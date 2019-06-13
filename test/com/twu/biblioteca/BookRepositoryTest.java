@@ -17,23 +17,23 @@ import java.time.Year;
 public class BookRepositoryTest {
     private BookRepository bookRepository = new BookRepository();
 
-    private Book book = new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666));
+    private Book testBook = new Book("Winnie the Pooh", "AA Milne", "1234", Year.of(1666));
 
     @Before
     public void addBooks() {
-        bookRepository.addBook(book);
+        bookRepository.addBook(testBook);
     }
 
     @Test
     public void theOneWhereWeAddABookToTheInventory() {
-        assertTrue(bookRepository.getAvailableBooks().contains(book));
+        assertTrue(bookRepository.getAvailableBooks().contains(testBook));
     }
 
     @Test
     public void theOneWhereWeCheckoutABook() {
         bookRepository.checkOutBook("1234");
-        assertFalse(bookRepository.getAvailableBooks().contains(book));
-        assertTrue(bookRepository.getCheckedOutBooks().contains(book));
+        assertFalse(bookRepository.getAvailableBooks().contains(testBook));
+        assertTrue(bookRepository.getCheckedOutBooks().contains(testBook));
     }
 
     @Test
