@@ -1,7 +1,7 @@
 package com.twu.biblioteca.userinterface;
 
-import com.twu.biblioteca.bookrepo.Book;
-import com.twu.biblioteca.bookrepo.BookRepository;
+import com.twu.biblioteca.repo.Book;
+import com.twu.biblioteca.repo.Repository;
 
 import java.util.Scanner;
 
@@ -9,10 +9,10 @@ public class UserInterface {
 
     private Scanner scanner;
 
-    private BookRepository bookRepository;
+    private Repository repository;
 
-    public UserInterface(BookRepository bookRepository, Scanner scanner) {
-        this.bookRepository = bookRepository;
+    public UserInterface(Repository repository, Scanner scanner) {
+        this.repository = repository;
         this.scanner = scanner;
     }
 
@@ -56,20 +56,20 @@ public class UserInterface {
         String input;
         System.out.println("What is the ISBN of the book you would like to check out?");
         input = scanner.next();
-        System.out.println(bookRepository.returnBook(input) ? "Thank you for returning the book." : "That is not a valid book to return.");
+        System.out.println(repository.returnBook(input) ? "Thank you for returning the book." : "That is not a valid book to return.");
     }
 
     private void checkOutBook() {
         String input;
         System.out.println("What is the ISBN of the book you would like to check out?");
         input = scanner.next();
-        System.out.println(bookRepository.checkOutBook(input) ? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
+        System.out.println(repository.checkOutBook(input) ? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
     }
 
     public void displayBooks() {
         System.out.printf("%-30s%-30s%-30s%-30s%n", "** Title **", "** Author **", "** Year **", "** ISBN **");
         for (Book book :
-                bookRepository.getAvailableBooks()) {
+                repository.getAvailableBooks()) {
             System.out.printf("%-20s%-10s%-20s%-10s%-20s%-10s%-20s%-10s%n", book.getTitle(), "|",
                     book.getAuthor(), "|", book.getYear(), "|", book.getIsbn(), "|");
         }

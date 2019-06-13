@@ -1,34 +1,25 @@
-package com.twu.biblioteca.bookrepo;
+package com.twu.biblioteca.repo;
 
 import java.time.Year;
 
-public class Book {
+public class Book extends Lendable {
 
-    private String title;
     private String author;
     private String isbn;
-    private Year year;
 
     public Book(String title, String author, String isbn, Year year) {
-        this.title = title;
+        super.setTitle(title);
         this.author = author;
         this.isbn = isbn;
-        this.year = year;
+        super.setYear(year);
     }
 
     public String getAuthor() {
         return author;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
     public String getIsbn() {
         return isbn;
     }
 
-    public Year getYear() {
-        return year;
-    }
 }

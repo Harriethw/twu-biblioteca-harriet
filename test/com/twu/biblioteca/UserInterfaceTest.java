@@ -1,7 +1,7 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.bookrepo.Book;
-import com.twu.biblioteca.bookrepo.BookRepository;
+import com.twu.biblioteca.repo.Book;
+import com.twu.biblioteca.repo.Repository;
 import com.twu.biblioteca.userinterface.UserInterface;
 import org.junit.After;
 import org.junit.Before;
@@ -37,7 +37,7 @@ public class UserInterfaceTest {
     private ByteArrayOutputStream testOut;
 
     @Mock
-    private BookRepository bookRepository;
+    private Repository repository;
 
     @InjectMocks
     private UserInterface userInterface;
@@ -58,7 +58,7 @@ public class UserInterfaceTest {
     @Before
     public void addBooks() {
         mockBooks.add(mockBook);
-        Mockito.when(bookRepository.getAvailableBooks()).thenReturn(mockBooks);
+        Mockito.when(repository.getAvailableBooks()).thenReturn(mockBooks);
     }
 
     @After
@@ -75,8 +75,8 @@ public class UserInterfaceTest {
     @Test
     public void theOneWhereAllTheBooksAreDisplayed() {
         userInterface.displayBooks();
-        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getAuthor()));
-        assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getYear().toString()));
+        assertThat(getOutput(), containsString(repository.getAvailableBooks().get(0).getAuthor()));
+        assertThat(getOutput(), containsString(repository.getAvailableBooks().get(0).getYear().toString()));
     }
 
     @Test
@@ -85,12 +85,12 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).getAvailableBooks();
-            assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getAuthor()));
-            assertThat(getOutput(), containsString(bookRepository.getAvailableBooks().get(0).getYear().toString()));
+            Mockito.verify(repository, times(1)).getAvailableBooks();
+            assertThat(getOutput(), containsString(repository.getAvailableBooks().get(0).getAuthor()));
+            assertThat(getOutput(), containsString(repository.getAvailableBooks().get(0).getYear().toString()));
         });
         userInterface.menu();
     }
@@ -101,7 +101,7 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> assertThat(getOutput(), containsString("valid")));
         userInterface.menu();
@@ -113,7 +113,7 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         userInterface.menu();
     }
@@ -124,11 +124,11 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).checkOutBook("1234");
-            assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+            Mockito.verify(repository, times(1)).checkOutBook("1234");
+            assertFalse(repository.getCheckedOutBooks().contains(mockBook));
         });
         userInterface.menu();
     }
@@ -139,11 +139,11 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).checkOutBook("1238");
-            assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+            Mockito.verify(repository, times(1)).checkOutBook("1238");
+            assertFalse(repository.getCheckedOutBooks().contains(mockBook));
             assertThat(getOutput(), containsString("Sorry, that book is not available."));
         });
         userInterface.menu();
@@ -155,11 +155,11 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).returnBook("1234");
-            assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
+            Mockito.verify(repository, times(1)).returnBook("1234");
+            assertFalse(repository.getCheckedOutBooks().contains(mockBook));
         });
         userInterface.menu();
     }
@@ -170,10 +170,10 @@ public class UserInterfaceTest {
         InputStream in = new ByteArrayInputStream(input.getBytes());
         System.setIn(in);
         Scanner mockScanner = new Scanner(System.in);
-        UserInterface userInterface = new UserInterface(bookRepository, mockScanner);
+        UserInterface userInterface = new UserInterface(repository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).returnBook("1274");
+            Mockito.verify(repository, times(1)).returnBook("1274");
             assertThat(getOutput(), containsString("That is not a valid book to return."));
         });
         userInterface.menu();

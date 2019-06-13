@@ -1,9 +1,9 @@
-package com.twu.biblioteca.bookrepo;
+package com.twu.biblioteca.repo;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookRepository {
+public class Repository {
 
     private static List<Book> availableBooks = new ArrayList<>();
 
