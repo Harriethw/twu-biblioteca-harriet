@@ -34,7 +34,6 @@ public class BookRepositoryTest {
         bookRepository.checkOutBook("1234");
         assertFalse(bookRepository.getAvailableBooks().contains(book));
         assertTrue(bookRepository.getCheckedOutBooks().contains(book));
-        bookRepository.returnBook("1234");
     }
 
     @Test
