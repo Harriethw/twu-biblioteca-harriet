@@ -38,11 +38,11 @@ public class UserInterface {
         String userId;
         userId = scanner.next();
         if (enterId(userId)) {
+            currentUserId = userId;
             System.out.println("Please enter your password");
             String password;
             password = scanner.next();
             if (enterPassword(password)) {
-                currentUserId = userId;
                 menu();
             } else {
                 System.out.println("Sorry that's not a valid password");
@@ -56,13 +56,13 @@ public class UserInterface {
     }
 
     private boolean enterId(String id) {
-        //TODO check whether valid id?
-        return true;
+        User selectedUser = userRepository.getUser(id);
+        return selectedUser != null;
     }
 
     private boolean enterPassword(String password) {
-        //TODO validate password
-        return true;
+        User selectedUser = userRepository.getUser(currentUserId);
+        return selectedUser.getPassword().equals(password);
     }
 
     public void menu() {
