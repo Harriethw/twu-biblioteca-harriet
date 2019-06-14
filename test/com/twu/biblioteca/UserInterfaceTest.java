@@ -138,7 +138,7 @@ public class UserInterfaceTest {
         UserInterface userInterface = new UserInterface(bookRepository, movieRepository, userRepository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(userRepository, times(1)).getUser("1234");
+            Mockito.verify(userRepository, times(3)).getUser("1234");
             assertTrue(getOutput().contains("Jane"));
         });
         userInterface.login();
