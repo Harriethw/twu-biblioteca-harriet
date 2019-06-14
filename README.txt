@@ -1,14 +1,14 @@
 Instructions to push your code to code.google.com
 =================================================
-1. Sign into GitHub and create a new repository
+1. Sign into GitHub and create a new bookRepository
         Repository name: twu-biblioteca-yourname
         Privacy level: Public
-        Don't check "Initialize this repository with a README"
+        Don't check "Initialize this bookRepository with a README"
         Add .gitignore: None
         Add a license: Apache License 2.0
 
 2. Run 'git init' in the folder that was extracted from the downloaded .zip file, in order to
- initialize local repository.
+ initialize local bookRepository.
 
 3. Make a local commit.
     $ git add -A
@@ -17,7 +17,7 @@ Instructions to push your code to code.google.com
 (Dont forget to add the hidden .idea folder, as it will make opening your project in Intellij easier.)
 
 4. After you are done with the local commit, you can share your code with "The World" by pushing it to your
- GitHub repository.
+ GitHub bookRepository.
     $ git remote add origin https://github.com/<YOUR-GITHUB-USERNAME>/twu-biblioteca-<YOURNAME>
     $ git push origin master
 
