@@ -5,6 +5,7 @@ import com.twu.biblioteca.model.User;
 import com.twu.biblioteca.repo.BookRepository;
 import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.repo.MovieRepository;
+import com.twu.biblioteca.repo.UserRepository;
 
 import java.util.Scanner;
 
@@ -16,11 +17,15 @@ public class UserInterface {
 
     private MovieRepository movieRepository;
 
+    private UserRepository userRepository;
+
     private String currentUserId;
 
-    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, Scanner scanner) {
+    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository,
+                         UserRepository userRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
         this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
         this.scanner = scanner;
     }
 
@@ -68,6 +73,7 @@ public class UserInterface {
         System.out.println("Enter 3 to return a book");
         System.out.println("Enter 4 to see the list of movies");
         System.out.println("Enter 5 to check out a movie");
+        System.out.println("Enter 6 to view profile information");
         System.out.println("Enter q to quit the application");
         input = scanner.next();
         handleMenuInput(input);
@@ -91,6 +97,9 @@ public class UserInterface {
             case "5":
                 checkOutMovie();
                 break;
+            case "6":
+                viewUserInfo();
+                break;
             case "q":
                 System.out.println("Goodbye!");
                 System.exit(0);
@@ -99,6 +108,7 @@ public class UserInterface {
                 break;
         }
     }
+
 
     private void returnBook() {
         String input;
@@ -137,6 +147,10 @@ public class UserInterface {
             System.out.printf("%-20s%-10s%-20s%-10s%-20s%-10s%-20s%-10s%n", movie.getTitle(), "|",
                     movie.getDirector(), "|", movie.getYear(), "|", movie.getRating(), "|");
         }
+    }
+
+    private void viewUserInfo() {
+        System.out.println(userRepository.getUser(currentUserId));
     }
 
     public String getCurrentUserId() {

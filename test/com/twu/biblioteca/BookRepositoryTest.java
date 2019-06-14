@@ -7,10 +7,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.time.Year;
+
+import static org.junit.Assert.*;
 
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,6 +31,7 @@ public class BookRepositoryTest {
     @Test
     public void theOneWhereWeCheckoutABook() {
         bookRepository.checkOutBook("1234", "userId");
+        assertEquals("userId", testBook.getCurrentUserId());
         assertFalse(bookRepository.getAvailableBooks().contains(testBook));
         assertTrue(bookRepository.getCheckedOutBooks().contains(testBook));
     }
@@ -49,6 +49,7 @@ public class BookRepositoryTest {
         bookRepository.checkOutBook("1235", "userId");
         assertFalse(bookRepository.getAvailableBooks().contains(book));
         bookRepository.returnBook("1235");
+        assertEquals(null, testBook.getCurrentUserId());
         assertTrue(bookRepository.getAvailableBooks().contains(book));
         assertFalse(bookRepository.getCheckedOutBooks().contains(book));
     }

@@ -16,4 +16,8 @@ public class UserRepository {
     public List<User> getUsers() {
         return users;
     }
+
+    public User getUser(String id) {
+        return users.stream().filter(user -> user.getLibraryId().equals(id)).findFirst().orElse(null);
+    }
 }
