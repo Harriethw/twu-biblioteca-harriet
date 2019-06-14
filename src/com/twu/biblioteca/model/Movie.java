@@ -1,4 +1,4 @@
-package com.twu.biblioteca.repo;
+package com.twu.biblioteca.model;
 
 import java.time.Year;
 

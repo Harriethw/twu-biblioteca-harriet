@@ -1,6 +1,6 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.repo.Movie;
+import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.repo.MovieRepository;
 import org.junit.Before;
 import org.junit.Test;

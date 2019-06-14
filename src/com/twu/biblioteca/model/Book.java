@@ -1,4 +1,4 @@
-package com.twu.biblioteca.repo;
+package com.twu.biblioteca.model;
 
 import java.time.Year;
 
@@ -6,6 +6,7 @@ public class Book extends Lendable {
 
     private String author;
     private String isbn;
+    private String currentUserId;
 
     public Book(String title, String author, String isbn, Year year) {
         super.setTitle(title);
@@ -22,4 +23,11 @@ public class Book extends Lendable {
         return isbn;
     }
 
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(String currentUserId) {
+        this.currentUserId = currentUserId;
+    }
 }

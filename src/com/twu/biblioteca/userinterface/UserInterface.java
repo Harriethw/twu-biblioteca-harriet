@@ -1,8 +1,8 @@
 package com.twu.biblioteca.userinterface;
 
-import com.twu.biblioteca.repo.Book;
+import com.twu.biblioteca.model.Book;
 import com.twu.biblioteca.repo.BookRepository;
-import com.twu.biblioteca.repo.Movie;
+import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.repo.MovieRepository;
 
 import java.util.Scanner;
