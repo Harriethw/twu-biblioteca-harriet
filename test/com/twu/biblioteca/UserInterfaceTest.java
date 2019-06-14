@@ -186,6 +186,22 @@ public class UserInterfaceTest {
         userInterface.menu();
     }
 
+
+    @Test
+    public void theOneWhereWeCheckOutAMovieSuccessfully() {
+        String input = "5 Clueless q";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
+        exit.expectSystemExit();
+        exit.checkAssertionAfterwards(() -> {
+            Mockito.verify(movieRepository, times(1)).checkOutMovie("Clueless");
+            assertFalse(movieRepository.getCheckedOutMovies().contains(mockMovie));
+        });
+        userInterface.menu();
+    }
+
     @Test
     public void theOneWhereWeSuccessfullyReturnABook() {
         String input = "3 1234 q";

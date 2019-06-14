@@ -32,6 +32,7 @@ public class UserInterface {
         System.out.println("Enter 2 to check out a book");
         System.out.println("Enter 3 to return a book");
         System.out.println("Enter 4 to see the list of movies");
+        System.out.println("Enter 5 to check out a movie");
         System.out.println("Enter q to quit the application");
         input = scanner.next();
         handleMenuInput(input);
@@ -51,6 +52,9 @@ public class UserInterface {
                 break;
             case "4":
                 displayMovies();
+                break;
+            case "5":
+                checkOutMovie();
                 break;
             case "q":
                 System.out.println("Goodbye!");
@@ -73,6 +77,13 @@ public class UserInterface {
         System.out.println("What is the ISBN of the book you would like to check out?");
         input = scanner.next();
         System.out.println(bookRepository.checkOutBook(input) ? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
+    }
+
+    private void checkOutMovie() {
+        String input;
+        System.out.println("What is the title of the movie you would like to check out?");
+        input = scanner.next();
+        System.out.println(movieRepository.checkOutMovie(input) ? "Thank you! Enjoy the movie." : "Sorry, that movie is not available.");
     }
 
     public void displayBooks() {

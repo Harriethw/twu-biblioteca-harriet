@@ -28,7 +28,7 @@ public class MovieRepository {
         }
     }
 
-    public static List<Movie> getCheckedOutMovies() {
+    public List<Movie> getCheckedOutMovies() {
         return checkedOutMovies;
     }
 }
