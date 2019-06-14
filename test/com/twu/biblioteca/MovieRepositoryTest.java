@@ -1,7 +1,5 @@
 package com.twu.biblioteca;
 
-import com.twu.biblioteca.repo.Book;
-import com.twu.biblioteca.repo.BookRepository;
 import com.twu.biblioteca.repo.Movie;
 import com.twu.biblioteca.repo.MovieRepository;
 import org.junit.Before;
@@ -23,18 +21,18 @@ public class MovieRepositoryTest {
 
     @Before
     public void addBooks() {
-        movieRepository.addBook(testMovie);
+        movieRepository.addMovie(testMovie);
     }
 
     @Test
     public void theOneWhereWeAddAMovieToTheInventory() {
-        assertTrue(movieRepository.getAvailableBooks().contains(testMovie));
+        assertTrue(movieRepository.getAvailableMovies().contains(testMovie));
     }
 //
 //    @Test
 //    public void theOneWhereWeCheckoutABook() {
 //        movieRepository.checkOutBook("1234");
-//        assertFalse(movieRepository.getAvailableBooks().contains(testMovie));
+//        assertFalse(movieRepository.getAvailableMovies().contains(testMovie));
 //        assertTrue(movieRepository.getCheckedOutBooks().contains(testMovie));
 //    }
 //
@@ -46,12 +44,12 @@ public class MovieRepositoryTest {
 //    @Test
 //    public void theOneWhereWeReturnABook() {
 //        Book book = new Book("Jane Eyre", "Charlotte Bronte", "1235", Year.of(1666));
-//        movieRepository.addBook(book);
-//        assertTrue(movieRepository.getAvailableBooks().contains(book));
+//        movieRepository.addMovie(book);
+//        assertTrue(movieRepository.getAvailableMovies().contains(book));
 //        movieRepository.checkOutBook("1235");
-//        assertFalse(movieRepository.getAvailableBooks().contains(book));
+//        assertFalse(movieRepository.getAvailableMovies().contains(book));
 //        movieRepository.returnBook("1235");
-//        assertTrue(movieRepository.getAvailableBooks().contains(book));
+//        assertTrue(movieRepository.getAvailableMovies().contains(book));
 //        assertFalse(movieRepository.getCheckedOutBooks().contains(book));
 //    }
 //

@@ -7,11 +7,11 @@ public class MovieRepository {
 
     private static List<Movie> availableMovies = new ArrayList<>();
 
-    public void addBook(Movie movie) {
+    public void addMovie(Movie movie) {
         availableMovies.add(movie);
     }
 
-    public List<Movie> getAvailableBooks() {
+    public List<Movie> getAvailableMovies() {
         return availableMovies;
     }
 }

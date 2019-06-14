@@ -2,6 +2,8 @@ package com.twu.biblioteca.userinterface;
 
 import com.twu.biblioteca.repo.Book;
 import com.twu.biblioteca.repo.BookRepository;
+import com.twu.biblioteca.repo.Movie;
+import com.twu.biblioteca.repo.MovieRepository;
 
 import java.util.Scanner;
 
@@ -11,8 +13,11 @@ public class UserInterface {
 
     private BookRepository bookRepository;
 
-    public UserInterface(BookRepository bookRepository, Scanner scanner) {
+    private MovieRepository movieRepository;
+
+    public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
+        this.movieRepository = movieRepository;
         this.scanner = scanner;
     }
 
@@ -26,6 +31,7 @@ public class UserInterface {
         System.out.println("Enter 1 to see the list of books");
         System.out.println("Enter 2 to check out a book");
         System.out.println("Enter 3 to return a book");
+        System.out.println("Enter 4 to see the list of movies");
         System.out.println("Enter q to quit the application");
         input = scanner.next();
         handleMenuInput(input);
@@ -42,6 +48,9 @@ public class UserInterface {
                 break;
             case "3":
                 returnBook();
+                break;
+            case "4":
+                displayMovies();
                 break;
             case "q":
                 System.out.println("Goodbye!");
@@ -72,6 +81,15 @@ public class UserInterface {
                 bookRepository.getAvailableBooks()) {
             System.out.printf("%-20s%-10s%-20s%-10s%-20s%-10s%-20s%-10s%n", book.getTitle(), "|",
                     book.getAuthor(), "|", book.getYear(), "|", book.getIsbn(), "|");
+        }
+    }
+
+    public void displayMovies() {
+        System.out.printf("%-30s%-30s%-30s%-30s%n", "** Title **", "** Director **", "** Year **", "** Rating **");
+        for (Movie movie :
+                movieRepository.getAvailableMovies()) {
+            System.out.printf("%-20s%-10s%-20s%-10s%-20s%-10s%-20s%-10s%n", movie.getTitle(), "|",
+                    movie.getDirector(), "|", movie.getYear(), "|", movie.getRating(), "|");
         }
     }
 
