@@ -1,6 +1,7 @@
 package com.twu.biblioteca.userinterface;
 
 import com.twu.biblioteca.model.Book;
+import com.twu.biblioteca.model.User;
 import com.twu.biblioteca.repo.BookRepository;
 import com.twu.biblioteca.model.Movie;
 import com.twu.biblioteca.repo.MovieRepository;
@@ -15,6 +16,8 @@ public class UserInterface {
 
     private MovieRepository movieRepository;
 
+    private String currentUserId;
+
     public UserInterface(BookRepository bookRepository, MovieRepository movieRepository, Scanner scanner) {
         this.bookRepository = bookRepository;
         this.movieRepository = movieRepository;
@@ -23,6 +26,38 @@ public class UserInterface {
 
     public void welcomeMessage() {
         System.out.println("Welcome to Biblioteca! Your one-stop-shop for great book titles in Bangalore!");
+    }
+
+    public void login() {
+        System.out.println("Please enter your library id");
+        String userId;
+        userId = scanner.next();
+        if (enterId(userId)) {
+            System.out.println("Please enter your password");
+            String password;
+            password = scanner.next();
+            if (enterPassword(password)) {
+                currentUserId = userId;
+                menu();
+            } else {
+                System.out.println("Sorry that's not a valid password");
+                login();
+            }
+        } else {
+            System.out.println("Sorry that's not a valid Id");
+            login();
+        }
+
+    }
+
+    private boolean enterId(String id) {
+        //TODO check whether valid id?
+        return true;
+    }
+
+    private boolean enterPassword(String password) {
+        //TODO validate password
+        return true;
     }
 
     public void menu() {
@@ -76,7 +111,7 @@ public class UserInterface {
         String input;
         System.out.println("What is the ISBN of the book you would like to check out?");
         input = scanner.next();
-        System.out.println(bookRepository.checkOutBook(input) ? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
+        System.out.println(bookRepository.checkOutBook(input, currentUserId) ? "Thank you! Enjoy the book." : "Sorry, that book is not available.");
     }
 
     private void checkOutMovie() {
@@ -104,4 +139,7 @@ public class UserInterface {
         }
     }
 
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
 }

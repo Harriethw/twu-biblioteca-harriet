@@ -31,14 +31,14 @@ public class BookRepositoryTest {
 
     @Test
     public void theOneWhereWeCheckoutABook() {
-        bookRepository.checkOutBook("1234");
+        bookRepository.checkOutBook("1234", "userId");
         assertFalse(bookRepository.getAvailableBooks().contains(testBook));
         assertTrue(bookRepository.getCheckedOutBooks().contains(testBook));
     }
 
     @Test
     public void theOneWhereWeCantCheckoutABook() {
-        assertFalse(bookRepository.checkOutBook("9999"));
+        assertFalse(bookRepository.checkOutBook("9999", "userId"));
     }
 
     @Test
@@ -46,7 +46,7 @@ public class BookRepositoryTest {
         Book book = new Book("Jane Eyre", "Charlotte Bronte", "1235", Year.of(1666));
         bookRepository.addBook(book);
         assertTrue(bookRepository.getAvailableBooks().contains(book));
-        bookRepository.checkOutBook("1235");
+        bookRepository.checkOutBook("1235", "userId");
         assertFalse(bookRepository.getAvailableBooks().contains(book));
         bookRepository.returnBook("1235");
         assertTrue(bookRepository.getAvailableBooks().contains(book));

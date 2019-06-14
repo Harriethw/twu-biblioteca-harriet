@@ -22,6 +22,6 @@ public class BibliotecaApp {
         movieRepository.addMovie(new Movie("Hackers", "Angelina Jolie", Year.of(1996), 7));
         UserInterface userInterface = new UserInterface(bookRepository, movieRepository, new Scanner(System.in));
         userInterface.welcomeMessage();
-        userInterface.menu();
+        userInterface.login();
     }
 }

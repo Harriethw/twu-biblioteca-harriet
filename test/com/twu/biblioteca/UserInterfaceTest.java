@@ -26,8 +26,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.times;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -84,6 +83,20 @@ public class UserInterfaceTest {
     public void theOneWhereWeGetAWelcomeMessage() {
         userInterface.welcomeMessage();
         assertThat(getOutput(), containsString("Welcome"));
+    }
+
+    @Test
+    public void theOneWhereWeLogin() {
+        String input = "1234 password q";
+        InputStream in = new ByteArrayInputStream(input.getBytes());
+        System.setIn(in);
+        Scanner mockScanner = new Scanner(System.in);
+        UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
+        exit.expectSystemExit();
+        exit.checkAssertionAfterwards(() -> {
+            assertEquals("1234", userInterface.getCurrentUserId());
+        });
+        userInterface.login();
     }
 
     @Test
@@ -164,7 +177,7 @@ public class UserInterfaceTest {
         UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).checkOutBook("1234");
+            Mockito.verify(bookRepository, times(1)).checkOutBook("1234", null);
             assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
         });
         userInterface.menu();
@@ -179,7 +192,7 @@ public class UserInterfaceTest {
         UserInterface userInterface = new UserInterface(bookRepository, movieRepository, mockScanner);
         exit.expectSystemExit();
         exit.checkAssertionAfterwards(() -> {
-            Mockito.verify(bookRepository, times(1)).checkOutBook("1238");
+            Mockito.verify(bookRepository, times(1)).checkOutBook("1238", null);
             assertFalse(bookRepository.getCheckedOutBooks().contains(mockBook));
             assertThat(getOutput(), containsString("Sorry, that book is not available."));
         });
