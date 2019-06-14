@@ -28,13 +28,13 @@ public class MovieRepositoryTest {
     public void theOneWhereWeAddAMovieToTheInventory() {
         assertTrue(movieRepository.getAvailableMovies().contains(testMovie));
     }
-//
-//    @Test
-//    public void theOneWhereWeCheckoutABook() {
-//        movieRepository.checkOutBook("1234");
-//        assertFalse(movieRepository.getAvailableMovies().contains(testMovie));
-//        assertTrue(movieRepository.getCheckedOutBooks().contains(testMovie));
-//    }
+
+    @Test
+    public void theOneWhereWeCheckoutAMovie() {
+        movieRepository.checkOutMovie("Clueless");
+        assertFalse(movieRepository.getAvailableMovies().contains(testMovie));
+        assertTrue(movieRepository.getCheckedOutMovies().contains(testMovie));
+    }
 //
 //    @Test
 //    public void theOneWhereWeCantCheckoutABook() {
